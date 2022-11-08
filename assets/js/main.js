@@ -1,47 +1,47 @@
-let x = 0;
-let y = 0;
-let z = 0;
-
+let x, y, z = 0;
 let remains = 5;
 
-const myMoveFunction = () => {
-    mLeft = Math.random() * 435;
-    mTop = Math.random() * 234;
-    document.getElementById("runaway-container").style.left = mLeft;
-    document.getElementById("runaway-container").style.top = mTop;
-}
-
-const myEnterFunction = () => {
+const myOverFunction = () => {
     mLeft = Math.random() * 300;
     mTop = Math.random() * 300;
     document.getElementById("runaway-container").style.left = mLeft;
     document.getElementById("runaway-container").style.top = mTop;
 }
 
-const myOverFunction = () => {
-    mLeft = Math.random() * 300;
-    mTop = Math.random() * 223;
-    document.getElementById("runaway-container").style.left = mLeft;
-    document.getElementById("runaway-container").style.top = -mTop;
+const startCaptcha = () => {
+    const collection = document.getElementsByClassName("leter");
+    for (let i = 0; i < collection.length; i++) {
+        collection[i].style.fontSize = "large";
+    }
+    document.getElementById("runaway-container").remove();
 }
+
+const createBox = () => {
+    const box = document.createElement("div");
+    box.setAttribute("id", "div1");
+    box.setAttribute("ondrop", "drop(event)");
+    box.setAttribute("ondragover", "allowDrop(event)");
+    document.body.appendChild(box);
+
+    const instructions = document.createElement("div");
+    instructions.setAttribute("id", "fade-in");
+    box.append(instructions);
+    document.getElementById("fade-in").innerText = "Drag here the words";
+    document.getElementById("fade-in").style.fontStyle = "italic";
+}
+
 const explode = () => {
-    // explotar
-    let linkText = document.getElementById("demo3").textContent;
+
+    let linkText = document.getElementById("initialText").textContent;
     
-    const cadena = []
+    const cadena = [];
     cadena[0] = linkText.slice(0, -12);
     cadena[1] = linkText.slice(4, -6);
     cadena[2] = linkText.slice(10);
     cadena[3] = 'like';
     cadena[4] = 'a human';
 
-    const collection = document.getElementsByClassName("leter");
-    
-    for (let i = 0; i < collection.length; i++) {
-        collection[i].style.fontSize = "large";
-    }
-
-    document.getElementById("runaway-container").remove();
+    startCaptcha();
 
     for (i = 0; i < 5; i++) {
         let part = document.createElement("span");
@@ -55,18 +55,7 @@ const explode = () => {
         document.body.appendChild(part);
     }
 
-    const box = document.createElement("div");
-    box.setAttribute("id", "div1");
-    box.setAttribute("ondrop", "drop(event)");
-    box.setAttribute("ondragover", "allowDrop(event)");
-    document.body.appendChild(box);
-
-    const instructions = document.createElement("div");
-    instructions.setAttribute("id", "fade-in");
-    box.append(instructions);
-    document.getElementById("fade-in").innerText = "Drag here the words";
-    document.getElementById("fade-in").style.fontStyle = "italic";
-
+    createBox();
 }
 
 const allowDrop = (ev) => {
@@ -83,7 +72,6 @@ const drop = (ev) => {
     let data = ev.dataTransfer.getData("text");
     document.getElementById(data).style.left = 0;
     document.getElementById(data).style.top = 0;
-    document.getElementById(data).className = 'onbox';
     ev.target.appendChild(document.getElementById(data));
     checkOrder(data);
 }
