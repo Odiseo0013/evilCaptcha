@@ -7,22 +7,22 @@ let remains = 5;
 const myMoveFunction = () => {
     mLeft = Math.random() * 435;
     mTop = Math.random() * 234;
-    // document.getElementById("runaway-container").style.left = mLeft;
-    // document.getElementById("runaway-container").style.top = mTop;
+    document.getElementById("runaway-container").style.left = mLeft;
+    document.getElementById("runaway-container").style.top = mTop;
 }
 
 const myEnterFunction = () => {
     mLeft = Math.random() * 300;
     mTop = Math.random() * 300;
-    // document.getElementById("runaway-container").style.left = mLeft;
-    // document.getElementById("runaway-container").style.top = mTop;
+    document.getElementById("runaway-container").style.left = mLeft;
+    document.getElementById("runaway-container").style.top = mTop;
 }
 
 const myOverFunction = () => {
     mLeft = Math.random() * 300;
     mTop = Math.random() * 223;
-    // document.getElementById("runaway-container").style.left = mLeft;
-    // document.getElementById("runaway-container").style.top = -mTop;
+    document.getElementById("runaway-container").style.left = mLeft;
+    document.getElementById("runaway-container").style.top = -mTop;
 }
 const explode = () => {
     // explotar
