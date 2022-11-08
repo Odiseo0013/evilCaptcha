@@ -89,7 +89,6 @@ const wrongWord = (data, origin) => {
     newNode.setAttribute("id", `drag${origin}`);
     newNode.setAttribute("draggable", "true");
     newNode.setAttribute("ondragstart", "drag(event)");
-    console.log(data, origin, textLink, parentDiv);
 
     let sp2 = document.getElementById("anchorPoint");
     return parentDiv.insertBefore(newNode, sp2);
