@@ -2,29 +2,29 @@ let x = 0;
 let y = 0;
 let z = 0;
 
-let left = 5;
+let remains = 5;
 
-function myMoveFunction() {
+const myMoveFunction = () => {
     mLeft = Math.random() * 435;
     mTop = Math.random() * 234;
-    document.getElementById("runaway-container").style.left = mLeft;
-    document.getElementById("runaway-container").style.top = mTop;
+    // document.getElementById("runaway-container").style.left = mLeft;
+    // document.getElementById("runaway-container").style.top = mTop;
 }
 
-function myEnterFunction() {
+const myEnterFunction = () => {
     mLeft = Math.random() * 300;
     mTop = Math.random() * 300;
-    document.getElementById("runaway-container").style.left = mLeft;
-    document.getElementById("runaway-container").style.top = mTop;
+    // document.getElementById("runaway-container").style.left = mLeft;
+    // document.getElementById("runaway-container").style.top = mTop;
 }
 
-function myOverFunction() {
+const myOverFunction = () => {
     mLeft = Math.random() * 300;
     mTop = Math.random() * 223;
-    document.getElementById("runaway-container").style.left = mLeft;
-    document.getElementById("runaway-container").style.top = -mTop;
+    // document.getElementById("runaway-container").style.left = mLeft;
+    // document.getElementById("runaway-container").style.top = -mTop;
 }
-function explode() {
+const explode = () => {
     // explotar
     let linkText = document.getElementById("demo3").textContent;
     
@@ -36,6 +36,7 @@ function explode() {
     cadena[4] = 'a human';
 
     const collection = document.getElementsByClassName("leter");
+    
     for (let i = 0; i < collection.length; i++) {
         collection[i].style.fontSize = "large";
     }
@@ -68,126 +69,112 @@ function explode() {
 
 }
 
-function allowDrop(ev) {
+const allowDrop = (ev) => {
     ev.preventDefault();
 }
 
-function drag(ev) {
+const drag = (ev) => {
     document.getElementById("fade-in") ? document.getElementById("fade-in").remove() : '';
     ev.dataTransfer.setData("text", ev.target.id);
 }
 
-function drop(ev) {
+const drop = (ev) => {
     ev.preventDefault();
     let data = ev.dataTransfer.getData("text");
     document.getElementById(data).style.left = 0;
     document.getElementById(data).style.top = 0;
-    //document.getElementById(data).style.marginLeft = 10;
-
+    document.getElementById(data).className = 'onbox';
     ev.target.appendChild(document.getElementById(data));
     checkOrder(data);
 }
 
-function checkOrder(data) {
+const wrongWord = (data, origin) => {
+
     let textLink = document.getElementById(data).textContent;
-    let origin = data.substring(4,5); 
+    let parentDiv = document.getElementById("anchorPoint").parentNode;
+    let newNode = document.createElement("span");
+
+    newNode.innerText = textLink;
+    newNode.style.position = "relative";
+    newNode.style.right =  Math.random() * 187;
+    newNode.style.bottom =  Math.random() * 126;
+    newNode.setAttribute("id", `drag${origin}`);
+    newNode.setAttribute("draggable", "true");
+    newNode.setAttribute("ondragstart", "drag(event)");
+    console.log(data, origin, textLink, parentDiv);
+
+    let sp2 = document.getElementById("anchorPoint");
+    return parentDiv.insertBefore(newNode, sp2);
+} 
+
+const checkOrder = (data) => {
 
     let parentDiv = document.getElementById("anchorPoint").parentNode;
-    
-    if( data === 'drag1' && left === 5 ) {
+    let dad = document.getElementById ("div1");
+    let origin = data.substring(4,5); 
+
+    if( data === 'drag1' && remains === 5 ) {
         document.getElementById(data).style.color = 'green';
         document.getElementById(data).style.fontWeight = 'bolder';
-        left = 4;
-    } else if ( data != 'drag1' && left === 5 ) {
-        document.getElementById(data).remove();
-        let newNode = document.createElement("span");
-        newNode.innerText = textLink;
-        newNode.style.position = "relative";
-        newNode.style.right =  Math.random() * 187;
-        newNode.style.bottom =  Math.random() * 126;
-        newNode.setAttribute("id", `drag${origin}`);
-        newNode.setAttribute("draggable", "true");
-        newNode.setAttribute("ondragstart", "drag(event)");
-
-        let sp2 = document.getElementById("anchorPoint");
-        parentDiv.insertBefore(newNode, sp2);
+        remains = 4;
+    } else if ( data != 'drag1' && remains === 5 ) {
+        wrongWord(data, origin);
+        let item = dad.querySelector(`#${data}`);
+        dad.removeChild(item);
     }    
-    if( data === 'drag2' && left === 4 ) {
+    if( data === 'drag2' && remains === 4 ) {
         document.getElementById(data).style.color = 'green';
         document.getElementById(data).style.fontWeight = 'bolder';
-        left = 3;
-    } else if ( (data != 'drag2' && data != 'drag1') && left === 4 ) {
-        document.getElementById(data).remove();
-        let newNode = document.createElement("span");
-        newNode.innerText = textLink;
-        newNode.style.position = "relative";
-        newNode.style.right =  Math.random() * 187;
-        newNode.style.bottom =  Math.random() * 126;
-        newNode.setAttribute("id", `drag${origin}`);
-        newNode.setAttribute("draggable", "true");
-        newNode.setAttribute("ondragstart", "drag(event)");
-
-        let sp2 = document.getElementById("anchorPoint");
-        parentDiv.insertBefore(newNode, sp2);
+        remains = 3;
+    } else if ( (data != 'drag2' && data != 'drag1') && remains === 4 ) {
+        wrongWord(data, origin);
+        let item = dad.querySelector(`#${data}`);
+        dad.removeChild(item);
     } 
-    if( data === 'drag3' && left === 3 ) {
+    if( data === 'drag3' && remains === 3 ) {
         document.getElementById(data).style.color = 'green';
         document.getElementById(data).style.fontWeight = 'bolder';
-        left = 2;
-    } else if ( (data != 'drag3' && data != 'drag2' && data != 'drag1') && left === 3 ) {
-        document.getElementById(data).remove();
-        let newNode = document.createElement("span");
-        newNode.innerText = textLink;
-        newNode.style.position = "relative";
-        newNode.style.right =  Math.random() * 187;
-        newNode.style.bottom =  Math.random() * 126;
-        newNode.setAttribute("id", `drag${origin}`);
-        newNode.setAttribute("draggable", "true");
-        newNode.setAttribute("ondragstart", "drag(event)");
-
-        let sp2 = document.getElementById("anchorPoint");
-        parentDiv.insertBefore(newNode, sp2);
+        remains = 2;
+    } else if ( (data != 'drag3' && data != 'drag2' && data != 'drag1') && remains === 3 ) {
+        wrongWord(data, origin);
+        let item = dad.querySelector(`#${data}`);
+        dad.removeChild(item);
     } 
-    if( data === 'drag4' && left === 2 ) {
+    if( data === 'drag4' && remains === 2 ) {
         document.getElementById(data).style.color = 'green';
         document.getElementById(data).style.fontWeight = 'bolder';
-        left = 1;
-    } else if ( (data != 'drag4' && data != 'drag3' && data != 'drag2' && data != 'drag1') && left === 2 ) {
-        document.getElementById(data).remove();
-        let newNode = document.createElement("span");
-        newNode.innerText = textLink;
-        newNode.style.position = "relative";
-        newNode.style.right =  Math.random() * 187;
-        newNode.style.bottom =  Math.random() * 126;
-        newNode.setAttribute("id", `drag${origin}`);
-        newNode.setAttribute("draggable", "true");
-        newNode.setAttribute("ondragstart", "drag(event)");
-
-        let sp2 = document.getElementById("anchorPoint");
-        parentDiv.insertBefore(newNode, sp2);
+        remains = 1;
+    } else if ( (data != 'drag4' && data != 'drag3' && data != 'drag2' && data != 'drag1') && remains === 2 ) {
+        wrongWord(data, origin);
+        let item = dad.querySelector(`#${data}`);
+        dad.removeChild(item);
     } 
-    if( data === 'drag5' && left === 1 ) {
+    if( data === 'drag5' && remains === 1 ) {
         document.getElementById(data).style.color = 'green';
         document.getElementById(data).style.fontWeight = 'bolder';
+        document.getElementById("div1").style.backgroundColor = 'white';
+        document.getElementById("div1").style.border = "thick solid green";
+        document.getElementById("div1").innerText = 'Captcha Sucesfull';
         
-        document.getElementById("div1").remove();
-
-        let congrats = document.createElement("span");
-        congrats.innerText = 'Congratulations, now you can access the link:';
-        congrats.style.color = 'white';
-        let sp2 = document.getElementById("anchorPoint");
-        parentDiv.insertBefore(congrats, sp2);
-
-        let theLink = document.createElement('a');
-        let textNode = document.createTextNode("The Oatmeal");
-
-        theLink.appendChild(textNode);
-        theLink.href = "https://theoatmeal.com/";
-        parentDiv.insertBefore(theLink, sp2);
-
-        const collection = document.getElementsByClassName("leter");
-        for (let i = 0; i < collection.length; i++) {
-            collection[i].style.fontSize = "400%";
-        }
+        setTimeout(() => {
+            document.getElementById("div1").remove();  
+            let congrats = document.createElement("span");
+            congrats.innerText = 'Congratulations, now you can access the link:';
+            congrats.style.color = 'white';
+            let sp2 = document.getElementById("anchorPoint");
+            parentDiv.insertBefore(congrats, sp2);
+    
+            let theLink = document.createElement('a');
+            let textNode = document.createTextNode("The Oatmeal");
+    
+            theLink.appendChild(textNode);
+            theLink.href = "https://theoatmeal.com/";
+            parentDiv.insertBefore(theLink, sp2);
+    
+            const collection = document.getElementsByClassName("leter");
+            for (let i = 0; i < collection.length; i++) {
+                collection[i].style.fontSize = "400%";
+            }
+        }, 1000);
     } 
 }
